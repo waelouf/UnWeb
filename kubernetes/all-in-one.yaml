@@ -1,0 +1,234 @@
+# ============================================================================
+# Combined Kubernetes Deployment for UnWeb - HTML to Markdown Converter
+# ============================================================================
+#
+# This file contains all Kubernetes resources needed to deploy UnWeb:
+# - ConfigMap for application configuration
+# - Deployments for frontend (nginx) and backend (ASP.NET Core)
+# - Services to expose the deployments
+# - Ingress for external access with path-based routing
+#
+# Deploy with: kubectl apply -f k8s/all-in-one.yaml
+# Delete with: kubectl delete -f k8s/all-in-one.yaml
+#
+# Prerequisites:
+# - Kubernetes cluster with nginx ingress controller
+# - cert-manager for TLS certificates (optional)
+# - Update 'unweb.example.com' to your actual domain
+# ============================================================================
+
+---
+# ============================================================================
+# ConfigMap: Application Configuration
+# ============================================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unweb-config
+data:
+  appsettings.json: |
+    {
+      "Logging": {
+        "LogLevel": {
+          "Default": "Information",
+          "Microsoft.AspNetCore": "Warning"
+        }
+      },
+      "AllowedHosts": "*",
+      "ConversionSettings": {
+        "MaxFileSizeBytes": 5242880
+      }
+    }
+
+---
+# ============================================================================
+# Deployment: Frontend (nginx serving Vue 3 SPA)
+# ============================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unweb-frontend
+  labels:
+    app: unweb
+    component: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unweb
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: unweb
+        component: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: waelouf/unweb-frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+# ============================================================================
+# Deployment: Backend (ASP.NET Core API)
+# ============================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unweb-backend
+  labels:
+    app: unweb
+    component: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unweb
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: unweb
+        component: backend
+    spec:
+      containers:
+      - name: backend
+        image: waelouf/unweb-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: ASPNETCORE_URLS
+          value: "http://+:8080"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+# ============================================================================
+# Service: Frontend Service (ClusterIP)
+# ============================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: unweb-frontend-service
+  labels:
+    app: unweb
+    component: frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: unweb
+    component: frontend
+
+---
+# ============================================================================
+# Service: Backend Service (ClusterIP)
+# ============================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: unweb-backend-service
+  labels:
+    app: unweb
+    component: backend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: unweb
+    component: backend
+
+---
+# ============================================================================
+# Ingress: External Access with Path-Based Routing
+# ============================================================================
+# Routes:
+#   /api/* → Backend Service (ASP.NET Core API)
+#   /*     → Frontend Service (Vue 3 SPA)
+# ============================================================================
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unweb-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: unweb.example.com
+    http:
+      paths:
+      # API routes - must come first for specificity
+      - path: /api(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: unweb-backend-service
+            port:
+              number: 80
+
+      # Frontend routes - catch-all
+      - path: /(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: unweb-frontend-service
+            port:
+              number: 80
+
+  tls:
+  - hosts:
+    - unweb.example.com
+    secretName: unweb-tls

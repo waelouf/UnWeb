@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unweb-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: unweb.example.com
+    http:
+      paths:
+      # API routes - must come first for specificity
+      - path: /api(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: unweb-backend-service
+            port:
+              number: 80
+
+      # Frontend routes - catch-all
+      - path: /(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: unweb-frontend-service
+            port:
+              number: 80
+
+  tls:
+  - hosts:
+    - unweb.example.com
+    secretName: unweb-tls

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unweb-frontend-service
+  labels:
+    app: unweb
+    component: frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: unweb
+    component: frontend
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unweb-backend-service
+  labels:
+    app: unweb
+    component: backend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: unweb
+    component: backend

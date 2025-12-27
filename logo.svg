@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded background -->
+  <rect width="128" height="128" rx="24" fill="url(#bgGradient)"/>
+
+  <!-- Icon design centered -->
+  <g transform="translate(64, 64)">
+    <!-- Left opening bracket (HTML unwrapping) -->
+    <path d="M -35 -25 L -42 -25 L -42 25 L -35 25"
+          stroke="white" stroke-width="5" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Right opening bracket (HTML unwrapping) -->
+    <path d="M -20 -25 L -13 -25 L -13 25 L -20 25"
+          stroke="white" stroke-width="5" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"
+          opacity="0.6"/>
+
+    <!-- Arrow -->
+    <path d="M 0 0 L 12 0" stroke="white" stroke-width="4"
+          fill="none" stroke-linecap="round"/>
+    <path d="M 8 -4 L 12 0 L 8 4" stroke="white" stroke-width="4"
+          fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Clean lines (markdown result) -->
+    <g opacity="0.95">
+      <line x1="20" y1="-12" x2="42" y2="-12"
+            stroke="white" stroke-width="4" stroke-linecap="round"/>
+      <line x1="20" y1="0" x2="40" y2="0"
+            stroke="white" stroke-width="4" stroke-linecap="round"/>
+      <line x1="20" y1="12" x2="38" y2="12"
+            stroke="white" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

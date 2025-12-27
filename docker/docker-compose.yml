@@ -1,0 +1,27 @@
+services:
+  # Frontend - nginx serving Vue SPA from Docker Hub
+  frontend:
+    image: waelouf/unweb-frontend:latest
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - unweb-network
+
+  # Backend - ASP.NET Core API from Docker Hub
+  backend:
+    image: waelouf/unweb-backend:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+    restart: unless-stopped
+    networks:
+      - unweb-network
+
+networks:
+  unweb-network:
+    driver: bridge
