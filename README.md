@@ -8,17 +8,19 @@ UnWeb converts HTML to clean CommonMark markdown. Perfect for migrating content 
 
 ## Features
 
-- **Dual Input Modes**: Paste HTML directly or upload .html/.htm files
+- **Triple Input Modes**: Paste HTML directly, upload .html/.htm files (Beta), or fetch from URL (Beta)
+- **URL Fetching**: Convert any public webpage to markdown by providing a URL
 - **Smart Content Extraction**: Automatically detects main content from full webpages
 - **CommonMark Output**: Clean, standard markdown format
-- **Simple Interface**: Two-panel design for easy conversion
+- **Modern Interface**: Two-panel Vue 3 UI with intuitive tab-based input switching
 - **Download & Copy**: Export markdown or copy to clipboard
 - **RESTful API**: Programmatic conversion support
+- **Security**: SSRF protection, private IP blocking, content validation
 
 ## Tech Stack
 
 - **Frontend**: Vue 3 + nginx (containerized)
-- **Backend**: ASP.NET Core .NET 8 (containerized)
+- **Backend**: ASP.NET Core .NET 10 (containerized)
 - **Libraries**: AngleSharp (HTML parsing), ReverseMarkdown (conversion)
 
 ## Quick Start
@@ -94,6 +96,34 @@ Convert HTML from uploaded file (.html, .htm, max 5MB).
 **Request:** multipart/form-data with `file` field
 
 **Response:** Same as `/api/convert/paste`
+
+### POST `/api/convert/url`
+
+Convert HTML from a URL.
+
+**Request:**
+```json
+{
+  "url": "https://example.com/article"
+}
+```
+
+**Response:** Same as `/api/convert/paste`
+
+**Security Features:**
+- Blocks private IP addresses (localhost, 192.168.x.x, 10.x.x.x, 172.16-31.x.x)
+- Only allows HTTP/HTTPS protocols
+- 60-second timeout
+- 10MB content size limit
+- Content-Type validation (text/html only)
+
+**Error Responses:**
+- `400 Bad Request` - Invalid URL or unsupported protocol
+- `403 Forbidden` - Private IP address blocked
+- `413 Payload Too Large` - Content exceeds 10MB
+- `415 Unsupported Media Type` - Non-HTML content
+- `502 Bad Gateway` - Failed to fetch URL
+- `504 Gateway Timeout` - Request timed out
 
 ### GET /health
 

@@ -4,6 +4,10 @@
       <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
     </linearGradient>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="15%" style="stop-color:black;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:white;stop-opacity:1" />
+    </linearGradient>
   </defs>
 
   <!-- Rounded background -->
@@ -11,30 +15,31 @@
 
   <!-- Icon design centered -->
   <g transform="translate(64, 64)">
-    <!-- Left opening bracket (HTML unwrapping) -->
-    <path d="M -35 -25 L -42 -25 L -42 25 L -35 25"
-          stroke="white" stroke-width="5" fill="none"
-          stroke-linecap="round" stroke-linejoin="round"/>
-
-    <!-- Right opening bracket (HTML unwrapping) -->
-    <path d="M -20 -25 L -13 -25 L -13 25 L -20 25"
-          stroke="white" stroke-width="5" fill="none"
-          stroke-linecap="round" stroke-linejoin="round"
-          opacity="0.6"/>
+    <!-- HTML closing tag -->
+    <text x="-60" y="-5" font-family="monospace, Consolas, Monaco" font-size="32"
+          font-weight="bold" fill="white" text-anchor="start">&lt;<tspan opacity="0.5" >/&gt;
+          </tspan></text>
+     
+     
+    <!-- UnWeb text -->
+    <text x="-55" y="18" font-family="Arial, sans-serif" font-size="12"
+          font-weight="600" fill="white" text-anchor="start">
+           Un<tspan opacity="0.5" >Web</tspan>
+      </text>
 
     <!-- Arrow -->
-    <path d="M 0 0 L 12 0" stroke="white" stroke-width="4"
+    <path d="M -4 0 L 12 0" stroke="white" stroke-width="4"
           fill="none" stroke-linecap="round"/>
     <path d="M 8 -4 L 12 0 L 8 4" stroke="white" stroke-width="4"
           fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 
     <!-- Clean lines (markdown result) -->
     <g opacity="0.95">
-      <line x1="20" y1="-12" x2="42" y2="-12"
+      <line x1="22" y1="-12" x2="50" y2="-12"
             stroke="white" stroke-width="4" stroke-linecap="round"/>
-      <line x1="20" y1="0" x2="40" y2="0"
+      <line x1="22" y1="0" x2="45" y2="0"
             stroke="white" stroke-width="4" stroke-linecap="round"/>
-      <line x1="20" y1="12" x2="38" y2="12"
+      <line x1="22" y1="12" x2="42" y2="12"
             stroke="white" stroke-width="4" stroke-linecap="round"/>
     </g>
   </g>

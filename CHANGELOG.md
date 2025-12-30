@@ -2,6 +2,39 @@
 
 All notable changes to UnWeb will be documented in this file.
 
+## [1.1.0] - 2025-12-29
+
+### Added
+
+- **URL Fetching**: New `POST /api/convert/url` endpoint to convert web pages by URL
+  - Fetch HTML from any public URL and convert to markdown
+  - 60-second timeout for URL fetching
+  - 10MB content size limit
+  - Content-Type validation (text/html only)
+- **Security Features**:
+  - SSRF (Server-Side Request Forgery) protection
+  - Blocks private IP ranges (10.x.x.x, 172.16-31.x.x, 192.168.x.x, 127.x.x.x)
+  - Blocks localhost and loopback addresses
+  - Protocol validation (HTTP/HTTPS only)
+- **Comprehensive Error Handling**:
+  - HTTP 400 for invalid URLs and unsupported protocols
+  - HTTP 403 for blocked private IPs
+  - HTTP 413 for oversized content
+  - HTTP 415 for non-HTML content types
+  - HTTP 502 for network failures
+  - HTTP 504 for timeouts
+- **Integration Tests**: 7 new tests covering URL endpoint validation and security
+- **UI Enhancements**:
+  - Link tab now enabled with Beta badge
+  - New logo design featuring `</>` symbol with "UnWeb" branding
+  - Gradient opacity effects on logo elements
+
+### Changed
+
+- Updated from .NET 8 to .NET 10
+- Input modes changed from "Dual" to "Triple" (paste, upload, URL)
+- Logo updated from bracket symbols to HTML closing tag `</>`
+
 ## [1.0.0] - 2025-12-27
 
 ### Initial Public Release
