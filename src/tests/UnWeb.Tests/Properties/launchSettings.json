@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "UnWeb.Tests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:58466;http://localhost:58467"
+    }
+  }
+}

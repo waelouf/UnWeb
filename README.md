@@ -1,6 +1,8 @@
 # UnWeb - HTML to Markdown Converter
 
-![UnWeb Logo](logo.svg)
+
+![UnWeb Logo](/src/frontend/public/assets/unweb-icon.svg)
+
 
 **Un-webbing content, stripping web complexity**
 

@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnWeb", "UnWeb.csproj", "{8A67BE7E-5E54-7D61-109F-6E04AB6D9D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnWeb.Tests", "..\tests\UnWeb.Tests\UnWeb.Tests.csproj", "{5A110D67-2CC3-62A7-C6D1-3D4A7FB07188}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A67BE7E-5E54-7D61-109F-6E04AB6D9D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A67BE7E-5E54-7D61-109F-6E04AB6D9D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A67BE7E-5E54-7D61-109F-6E04AB6D9D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A67BE7E-5E54-7D61-109F-6E04AB6D9D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A110D67-2CC3-62A7-C6D1-3D4A7FB07188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A110D67-2CC3-62A7-C6D1-3D4A7FB07188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A110D67-2CC3-62A7-C6D1-3D4A7FB07188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A110D67-2CC3-62A7-C6D1-3D4A7FB07188}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4360036E-2D2B-412B-99E1-DC04381666CB}
+	EndGlobalSection
+EndGlobal
