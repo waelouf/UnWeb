@@ -1,0 +1,40 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+*.log
+*.vspscc
+*.vssscc
+.vs/
+publish/
+
+# Frontend
+node_modules/
+dist/
+*.local
+.DS_Store
+
+# Backend wwwroot (generated from frontend build)
+backend/wwwroot/
+
+# Environment
+.env
+.env.local
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+.DS_Store
+src/backend/obj/*
